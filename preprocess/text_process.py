@@ -100,9 +100,13 @@ class EssayConstructor:
 
             # new idx
             if idx != prev_idx:
-                res_all.append(res)
+                if prev_idx != "":
+                    res_all.append(res)
+                    len_texts.append(len_text)
+                    sentence_counts.append(sentence_count)
+                    paragraph_counts.append(paragraph_count)
+
                 res, len_text, sentence_count, paragraph_count = "", 0, 0, 0
-                prev_up_event = ""
                 prev_idx = idx
 
             if activity != "Nonproduction":
@@ -139,18 +143,22 @@ class EssayConstructor:
                     self.text_processor.split_to_paragraph(res))
 
             prev_up_event = up_event
-            len_texts.append(len_text)
-            sentence_counts.append(sentence_count)
-            paragraph_counts.append(paragraph_count)
 
+        # append last essay data
         res_all.append(res)
-        return res_all[1:], len_texts, sentence_counts, paragraph_counts
+        len_texts.append(len_text)
+        sentence_counts.append(sentence_count)
+        paragraph_counts.append(paragraph_count)
+
+        return res_all, len_texts, sentence_counts, paragraph_counts
 
 
 if __name__ == "__main__":
     df = pd.read_csv("data/train_logs_clean.csv")
     essay_constructor = EssayConstructor()
-    reconstructed_texts = essay_constructor.recon_writing(df)
+    reconstructed_texts, len_texts, sentence_counts, paragraph_counts = essay_constructor.recon_writing(
+        df)
     idx = df["id"].unique()
-    result_df = pd.DataFrame({"id": idx, "text": reconstructed_texts[0]})
+    result_df = pd.DataFrame({"id": idx, "text": reconstructed_texts, "len_text": len_texts,
+                             "sentence_count": sentence_counts, "paragraph_count": paragraph_counts})
     result_df.to_csv("data/train_logs_extracted_text.csv", index=False)
