@@ -41,7 +41,7 @@ class TextProcessor:
         for pun in punctuation_chars:
             s = s.replace(pun, char_sep)
         s_arr = re.split(char_sep, s)
-        s_arr = [w for w in s_arr if "q" in w]
+        s_arr = [w for w in s_arr if w.strip()]  # Keep non-empty words
         return s_arr
 
     def split_to_sentence(self, s):
@@ -51,14 +51,13 @@ class TextProcessor:
         for punc in punctuation:
             s = s.replace(punc, char_sep)
         s_arr = re.split(char_sep, s)
-        s_arr = [w for w in s_arr if ("q" in w)]
+        s_arr = [w for w in s_arr if w.strip()]  # Keep non-empty sentences
         return s_arr
 
     def split_to_paragraph(self, s):
         s = s.lower()
-        char_sep = "@"
-        s_arr = re.split(char_sep, s)
-        s_arr = [w for w in s_arr if ("q" in w)]
+        s_arr = re.split(r'n\s*n+', s)
+        s_arr = [w for w in s_arr if w.strip()]  # Keep non-empty paragraphs
         return s_arr
 
     def change_punctuation(self, text):
@@ -101,6 +100,7 @@ class EssayConstructor:
             # new idx
             if idx != prev_idx:
                 if prev_idx != "":
+                    # append first essay data
                     res_all.append(res)
                     len_texts.append(len_text)
                     sentence_counts.append(sentence_count)
