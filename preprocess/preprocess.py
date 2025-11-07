@@ -35,9 +35,9 @@ class Preprocess:
         return result
 
 
-train_log_df = pd.read_csv("data/train_logs.csv")
-train_scores_df = pd.read_csv("data/train_scores.csv")
-test_log_df = pd.read_csv("data/test_logs.csv")
+train_log_df = pd.read_csv("../data/train_logs.csv")
+train_scores_df = pd.read_csv("../data/train_scores.csv")
+test_log_df = pd.read_csv("../data/test_logs.csv")
 
 preprocessor = Preprocess()
 train_log_df = preprocessor.label_encoding(train_log_df)
