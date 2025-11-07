@@ -486,9 +486,9 @@ http-client.private.env.json
 .trash
 
 # Emacs backup and auto-save files
-    /~
-    .#/
-    #*#
+/~
+.#/
+#*#
 #*
 \#*
 
