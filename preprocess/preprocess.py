@@ -75,3 +75,9 @@ if __name__ == "__main__":
     df = preprocessor.remove_start_and_end_time(df)
     df = preprocessor.remove_rest_time(df)
     df.to_csv("data/train_logs_clean.csv", index=False)
+
+    df = pd.read_csv("data/test_logs.csv")
+    df = preprocessor.label_encoding(df)
+    df = preprocessor.remove_start_and_end_time(df)
+    df = preprocessor.remove_rest_time(df)
+    df.to_csv("data/test_logs_clean.csv", index=False)

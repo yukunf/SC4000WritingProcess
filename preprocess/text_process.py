@@ -162,3 +162,11 @@ if __name__ == "__main__":
     result_df = pd.DataFrame({"id": idx, "text": reconstructed_texts, "len_text": len_texts,
                              "sentence_count": sentence_counts, "paragraph_count": paragraph_counts})
     result_df.to_csv("data/train_logs_extracted_text.csv", index=False)
+    df = pd.read_csv("data/test_logs_clean.csv")
+    essay_constructor = EssayConstructor()
+    reconstructed_texts, len_texts, sentence_counts, paragraph_counts = essay_constructor.recon_writing(
+        df)
+    idx = df["id"].unique()
+    result_df = pd.DataFrame({"id": idx, "text": reconstructed_texts, "len_text": len_texts,
+                             "sentence_count": sentence_counts, "paragraph_count": paragraph_counts})
+    result_df.to_csv("data/test_logs_extracted_text.csv", index=False)
