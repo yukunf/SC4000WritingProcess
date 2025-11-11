@@ -20,7 +20,7 @@ df_train = df_train.drop('id', axis=1)
 test_ids = df_test['id']  # Save IDs for submission
 df_test = df_test.drop('id', axis=1)
 
-X = df_train.iloc[:, :-1]  
+X = df_train.iloc[:, :-1]
 X_test = df_test
 y = df_train.iloc[:, -1].values
 preds = np.zeros(len(df_train))
